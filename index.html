@@ -170,7 +170,16 @@ footer{padding:64px 48px 40px;border-top:1px solid rgba(74,155,104,0.06)}
 .gold-text{color:var(--gold)}
 .green-text{color:var(--fairway)}
 
-/* MOBILE */
+/* INSTAGRAM EMBED GRID */
+.ig-embed-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:0 auto}
+.ig-placeholder{aspect-ratio:1;border-radius:16px;border:1px dashed rgba(74,155,104,0.2);background:var(--charcoal);display:flex;align-items:center;justify-content:center}
+.ig-ph-inner{display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px;text-align:center}
+.ig-ph-inner span{font-size:12px;color:var(--steel);line-height:1.5}
+/* Make real Instagram embeds fit the grid */
+.ig-embed-grid .instagram-media{min-width:unset !important;width:100% !important;margin:0 !important}
+@media(max-width:640px){.ig-embed-grid{grid-template-columns:1fr}}
+
+
 @media(max-width:768px){
   nav{padding:14px 24px}
   .nav-links{display:none}
@@ -416,57 +425,112 @@ footer{padding:64px 48px 40px;border-top:1px solid rgba(74,155,104,0.06)}
     <h2 class="section-title reveal" style="text-align:center;margin:0 auto">Get a quote today.</h2>
     <p class="section-body reveal" style="text-align:center;margin:16px auto 0">Tell us about your order and we'll get back to you within one business day with pricing and next steps.</p>
 
+    <!-- ⚠️ SETUP STEP: Go to formspree.io, create a free account, make a new form,
+         and replace YOUR_FORMSPREE_ID below with your actual form ID (e.g. xpwzabcd) -->
     <div class="form-wrap reveal">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">First Name</label>
-          <input class="form-input" type="text" placeholder="Your first name">
+      <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" id="quote-form">
+        <input type="hidden" name="_replyto" value="thefairwayink@gmail.com">
+        <input type="hidden" name="_subject" value="New Quote Request — Fairway Ink">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" name="first_name" placeholder="Your first name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" name="last_name" placeholder="Your last name" required>
+          </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Last Name</label>
-          <input class="form-input" type="text" placeholder="Your last name">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" name="email" placeholder="you@email.com" required>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Email Address</label>
-        <input class="form-input" type="email" placeholder="you@email.com">
-      </div>
-      <div class="form-row">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Quantity</label>
+            <select class="form-select form-input" name="quantity" required>
+              <option value="">Select quantity</option>
+              <option>12 balls (1 dozen)</option>
+              <option>24 balls (2 dozen)</option>
+              <option>48 balls (4 dozen)</option>
+              <option>100+ balls</option>
+              <option>Custom quantity</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Occasion</label>
+            <select class="form-select form-input" name="occasion" required>
+              <option value="">Select occasion</option>
+              <option>Corporate Event</option>
+              <option>Golf Tournament</option>
+              <option>Gift / Groomsmen</option>
+              <option>Charity Event</option>
+              <option>Business Branding</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
         <div class="form-group">
-          <label class="form-label">Quantity</label>
-          <select class="form-select form-input">
-            <option value="">Select quantity</option>
-            <option>12 balls (1 dozen)</option>
-            <option>24 balls (2 dozen)</option>
-            <option>48 balls (4 dozen)</option>
-            <option>100+ balls</option>
-            <option>Custom quantity</option>
-          </select>
+          <label class="form-label">Tell us about your order</label>
+          <textarea class="form-textarea" name="message" placeholder="Logo details, timeline, any questions..."></textarea>
         </div>
-        <div class="form-group">
-          <label class="form-label">Occasion</label>
-          <select class="form-select form-input">
-            <option value="">Select occasion</option>
-            <option>Corporate Event</option>
-            <option>Golf Tournament</option>
-            <option>Gift / Groomsmen</option>
-            <option>Charity Event</option>
-            <option>Business Branding</option>
-            <option>Other</option>
-          </select>
-        </div>
+        <button type="submit" class="form-submit">Request a Quote →</button>
+        <p class="form-note">We'll respond within one business day. No commitment required.</p>
+      </form>
+      <div id="form-success" style="display:none;text-align:center;padding:48px 0">
+        <div style="font-family:'Great Vibes';font-size:42px;color:var(--fairway);margin-bottom:12px">Thank you!</div>
+        <p style="font-size:15px;color:var(--steel)">Your quote request has been sent. We'll be in touch within one business day.</p>
       </div>
-      <div class="form-group">
-        <label class="form-label">Tell us about your order</label>
-        <textarea class="form-textarea" placeholder="Logo details, timeline, any questions..."></textarea>
-      </div>
-      <button class="form-submit">Request a Quote →</button>
-      <p class="form-note">We'll respond within one business day. No commitment required.</p>
     </div>
   </div>
 </section>
 
-<!-- CTA BANNER -->
+<!-- INSTAGRAM -->
+<section class="section" id="instagram" style="background:var(--dark);padding:100px 0">
+  <div class="container" style="text-align:center">
+    <span class="section-eyebrow reveal" style="display:block">Instagram</span>
+    <h2 class="section-title reveal" style="margin:0 auto">Follow the journey.</h2>
+    <p class="section-body reveal" style="margin:16px auto 24px">See our latest prints, packaging, and happy customers on Instagram.</p>
+    <a href="https://instagram.com/fairwayink.ca" target="_blank" rel="noopener" class="btn-secondary reveal" style="display:inline-flex;align-items:center;gap:8px;margin-bottom:56px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      @fairwayink.ca
+    </a>
+
+    <!-- Instagram embed placeholder grid — replace iframes with your actual Instagram post embeds -->
+    <!-- To get an embed: open any of your Instagram posts → click ··· → Embed → copy the blockquote -->
+    <div class="ig-embed-grid reveal">
+      <!-- PASTE YOUR INSTAGRAM EMBED BLOCKQUOTES HERE -->
+      <!-- Example placeholder cards shown until you add real embeds -->
+      <div class="ig-placeholder">
+        <div class="ig-ph-inner">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--fairway)" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="var(--fairway)" stroke="none"/></svg>
+          <span>Add your Instagram post embed here</span>
+          <a href="https://instagram.com/fairwayink.ca" target="_blank" rel="noopener" style="color:var(--fairway);font-size:11px;font-family:'Space Mono';letter-spacing:2px">VIEW ON INSTAGRAM →</a>
+        </div>
+      </div>
+      <div class="ig-placeholder">
+        <div class="ig-ph-inner">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--fairway)" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="var(--fairway)" stroke="none"/></svg>
+          <span>Add your Instagram post embed here</span>
+          <a href="https://instagram.com/fairwayink.ca" target="_blank" rel="noopener" style="color:var(--fairway);font-size:11px;font-family:'Space Mono';letter-spacing:2px">VIEW ON INSTAGRAM →</a>
+        </div>
+      </div>
+      <div class="ig-placeholder">
+        <div class="ig-ph-inner">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--fairway)" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="var(--fairway)" stroke="none"/></svg>
+          <span>Add your Instagram post embed here</span>
+          <a href="https://instagram.com/fairwayink.ca" target="_blank" rel="noopener" style="color:var(--fairway);font-size:11px;font-family:'Space Mono';letter-spacing:2px">VIEW ON INSTAGRAM →</a>
+        </div>
+      </div>
+    </div>
+
+    <p class="reveal" style="margin-top:32px;font-size:12px;color:#333;font-family:'Space Mono';letter-spacing:2px">
+      HOW TO ADD YOUR POSTS: Open instagram.com on desktop → open any post → click ··· → Embed → copy the code → paste it inside .ig-embed-grid above, replacing a placeholder div
+    </p>
+  </div>
+</section>
+
+
 <section class="cta-section">
   <div class="cta-script">Fairway</div>
   <div class="cta-word">INK</div>
@@ -493,7 +557,7 @@ footer{padding:64px 48px 40px;border-top:1px solid rgba(74,155,104,0.06)}
     <div class="footer-links">
       <h4>Contact</h4>
       <a href="mailto:thefairwayink@gmail.com">thefairwayink@gmail.com</a>
-      <a href="#">Instagram</a>
+      <a href="https://instagram.com/fairwayink.ca" target="_blank" rel="noopener">@fairwayink.ca on Instagram</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -521,10 +585,40 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 reveals.forEach(el => observer.observe(el));
 
-// Form submit handler (placeholder)
-document.querySelector('.form-submit').addEventListener('click', () => {
-  alert('Thank you! We\'ll be in touch within one business day.');
-});
+// Formspree AJAX form submission
+const form = document.getElementById('quote-form');
+const successMsg = document.getElementById('form-success');
+if (form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('.form-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        form.style.display = 'none';
+        successMsg.style.display = 'block';
+      } else {
+        btn.textContent = 'Something went wrong — try emailing us directly';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Something went wrong — try emailing us directly';
+      btn.disabled = false;
+    }
+  });
+}
+
+// Load Instagram embed script
+const igScript = document.createElement('script');
+igScript.src = 'https://www.instagram.com/embed.js';
+igScript.async = true;
+document.body.appendChild(igScript);
 </script>
 </body>
 </html>
